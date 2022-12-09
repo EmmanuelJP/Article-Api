@@ -17,7 +17,6 @@ namespace Article.Api
     {
         public Startup(IConfiguration configuration)
         {
-
             Configuration = configuration;
         }
 
