@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
+using Article.Model.Entities;
 
 
 namespace Article.Model.ArticleDbContext

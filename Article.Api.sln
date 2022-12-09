@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Article.Core", "Article.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Article.Model", "Article.Model\Article.Model.csproj", "{15D1BB4A-8849-4450-91DA-ED62EDE475CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Article.Repository", "Article.Repository\Article.Repository.csproj", "{5EE6932D-BF7C-4CD9-8CF9-D0C220C349D4}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Article.Service", "Article.Service\Article.Service.csproj", "{A61471DA-79C0-4147-A228-111D1A91ECE2}"
 EndProject
 Global
@@ -29,6 +31,10 @@ Global
 		{15D1BB4A-8849-4450-91DA-ED62EDE475CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15D1BB4A-8849-4450-91DA-ED62EDE475CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15D1BB4A-8849-4450-91DA-ED62EDE475CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EE6932D-BF7C-4CD9-8CF9-D0C220C349D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EE6932D-BF7C-4CD9-8CF9-D0C220C349D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EE6932D-BF7C-4CD9-8CF9-D0C220C349D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EE6932D-BF7C-4CD9-8CF9-D0C220C349D4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A61471DA-79C0-4147-A228-111D1A91ECE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A61471DA-79C0-4147-A228-111D1A91ECE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A61471DA-79C0-4147-A228-111D1A91ECE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
