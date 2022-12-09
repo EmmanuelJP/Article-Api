@@ -2,14 +2,16 @@
 using Article.Model.ArticleDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Article.Model.Migrations
 {
     [DbContext(typeof(ArticleDbContexts))]
-    partial class ArticleDbContextsModelSnapshot : ModelSnapshot
+    [Migration("20221209032707_initial2")]
+    partial class initial2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
