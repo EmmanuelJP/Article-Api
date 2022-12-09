@@ -1,9 +1,9 @@
-﻿using Article.Model.Entities;
+﻿using Article.Model.ArticleDbContext;
+using Article.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 namespace Article.Repository
 {
     public interface IArticleRepository
@@ -19,7 +19,7 @@ namespace Article.Repository
     {
         private readonly DbContext _dbContext;
         protected readonly DbSet<Model.Entities.Article> _dbSet;
-        public ArticleRepository(DbContext dbContext)
+        public ArticleRepository(ArticleDbContexts dbContext)
         {
             _dbContext = dbContext;
             _dbSet = dbContext.Set<Model.Entities.Article>();
