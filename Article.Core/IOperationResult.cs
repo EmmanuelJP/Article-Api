@@ -6,14 +6,11 @@ namespace Article.Core
     {
         bool IsSuccess { get; set; }
         string OperationMessage { get; set; }
-
     }
-
     public class OperationResult : IOperationResult
     {
         public bool IsSuccess { get; set; }
         public string OperationMessage { get; set; }
-
         public OperationResult(bool isSuccess, string operationMessage = "")
         {
             IsSuccess = isSuccess;
@@ -21,7 +18,6 @@ namespace Article.Core
         }
         public OperationResult()
         {
-
         }
     }
 }
