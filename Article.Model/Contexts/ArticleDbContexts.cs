@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
+using Article.Model.Entities;
 
 
 namespace Article.Model.ArticleDbContext
@@ -14,7 +14,7 @@ namespace Article.Model.ArticleDbContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("server=localhost;port=3306;database=Article;user=root;password=Sanchez1997!");
+            optionsBuilder.UseMySql("server=localhost;port=3306;database=Article;Uid=root;Pwd=123456789;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
