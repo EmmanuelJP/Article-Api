@@ -14,7 +14,7 @@ namespace Article.Model.ArticleDbContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("server=localhost;port=3306;database=Article;user=root;password=Sanchez1997!");
+            optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=ToDoTask;Uid=root;Pwd=Code4321,;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

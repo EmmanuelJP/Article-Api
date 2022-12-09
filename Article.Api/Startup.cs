@@ -26,6 +26,7 @@ namespace Article.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton<IService<Student>, Service>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
