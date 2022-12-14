@@ -17,8 +17,8 @@ namespace Article.Repository
     }
     public class ArticleRepository : IArticleRepository
     {
-        public readonly DbContext _dbContext;
-        public readonly DbSet<Model.Entities.Article> _dbSet;
+        private readonly DbContext _dbContext;
+        private readonly DbSet<Model.Entities.Article> _dbSet;
         public ArticleRepository(ArticleDbContext dbContext)
         {
             _dbContext = dbContext;
