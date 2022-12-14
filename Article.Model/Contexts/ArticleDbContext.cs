@@ -7,7 +7,7 @@ using Article.Model.Entities;
 
 namespace Article.Model.ArticleDbContext
 {
-    public class ArticleDbContexts : DbContext
+    public class ArticleDbContext : DbContext
     {
         public DbSet<Entities.Article> Article { get; set; }
 
