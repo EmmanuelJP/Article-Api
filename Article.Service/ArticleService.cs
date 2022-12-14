@@ -1,36 +1,30 @@
 ﻿using Article.Core;
+using Article.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Article.Service
 {
-    internal class ArticleService : IBaseService<Model.Entities.Article>
+    public class ArticleService : IBaseService<Model.Entities.Article>
     {
-        private readonly DbContext _dbContext;
-        protected readonly DbSet<Model.Entities.Article> _dbSet;
-        public ArticleService(DbContext dbContext)
+        protected readonly ArticleRepository _articleRepository;
+        public ArticleService(ArticleRepository articleRepository)
         {
-            _dbContext = dbContext;
-            _dbSet = dbContext.Set<Model.Entities.Article>();
+            _articleRepository = articleRepository;
         }
         public OperationResult Add(Model.Entities.Article entity)
         {
-            if (_dbSet.Where(x => x.Id == entity.Id).Any())
+            if (_articleRepository._dbSet.Where(x => x.Id == entity.Id).Any())
             {
                 return new OperationResult(false, "El Articulo existe");
             }
-            _dbSet.Add(entity);
+            _articleRepository.Add(entity);
             return new OperationResult(true, "El Articulo ha sido agregado");
-        }
-        public bool Commit()
-        {
-            var result = _dbContext.SaveChanges() == 1;
-            return result;
         }
         public OperationResult Delete(int id)
         {
-            if (_dbSet.Where(x => x.Id == id).Any())
+            if (_articleRepository._dbSet.Where(x => x.Id == id).Any())
             {
                 return new OperationResult(false, "No se pudo eliminar el articulo");
             }
@@ -44,19 +38,18 @@ namespace Article.Service
             return GetAll().Where(x => x.Id == id).FirstOrDefault();
         }
         public IEnumerable<Model.Entities.Article> GetAll()
-        {
-            return _dbSet.Where(x => x.IsDeleted == false);
+        { 
+            return _articleRepository._dbSet.Where(x => x.IsDeleted == false);
         }
         public OperationResult Update(Model.Entities.Article entity)
         {
-            if (_dbSet.Where(x => x.Id == entity.Id).Any())
+            if (_articleRepository._dbSet.Where(x => x.Id == entity.Id && entity.IsDeleted == false).Any())
             {
-                return new OperationResult(false, "El articulo no se pudo actualizar");
+                _articleRepository.Update(entity);
+                return new OperationResult(true, "Articulo actulizado");
             }
-            _dbSet.Attach(entity);
-            _dbContext.Entry(entity).State = EntityState.Modified;
-            Commit();
-            return new OperationResult(true, "Articulo Actualizada");
+            
+            return new OperationResult(true, "Articulo no pudo ser actulizado");
         }
     }
 }

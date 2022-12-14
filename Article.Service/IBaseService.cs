@@ -11,6 +11,5 @@ namespace Article.Service
         public OperationResult Update(T entity);
         public IEnumerable<T> GetAll();
         public OperationResult Delete(int id);
-        bool Commit();
     }
 }
