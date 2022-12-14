@@ -8,23 +8,23 @@ namespace Article.Repository
 {
     public interface IArticleRepository
     {
-        Model.Entities.Article Get(int id);
-        IQueryable<Model.Entities.Article> GetAll();
-        void Add(Model.Entities.Article entity);
-        void Update(Model.Entities.Article entity);
+        Articles Get(int id);
+        IQueryable<Articles> GetAll();
+        void Add(Articles entity);
+        void Update(Articles entity);
         void Delete(int id);
         bool Commit();
     }
     public class ArticleRepository : IArticleRepository
     {
         private readonly DbContext _dbContext;
-        private readonly DbSet<Model.Entities.Article> _dbSet;
+        private readonly DbSet<Articles> _dbSet;
         public ArticleRepository(ArticleDbContext dbContext)
         {
             _dbContext = dbContext;
-            _dbSet = dbContext.Set<Model.Entities.Article>();
+            _dbSet = dbContext.Set<Articles>();
         }
-        public void Add(Model.Entities.Article entity)
+        public void Add(Articles entity)
         {
             _dbSet.Add(entity);
             Commit();
@@ -40,15 +40,15 @@ namespace Article.Repository
             item.IsDeleted = true;
             Update(item);
         }
-        public Model.Entities.Article Get(int id)
+        public Articles Get(int id)
         {
             return _dbSet.Where(x => x.Id == id).FirstOrDefault();
         }
-        public IQueryable<Model.Entities.Article> GetAll()
+        public IQueryable<Articles> GetAll()
         {
             return _dbSet.Where(x => x.IsDeleted == false);
         }
-        public void Update(Model.Entities.Article entity)
+        public void Update(Articles entity)
         {
             _dbSet.Attach(entity);
             _dbContext.Entry(entity).State = EntityState.Modified;

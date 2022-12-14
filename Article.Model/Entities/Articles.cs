@@ -2,7 +2,7 @@
 
 namespace Article.Model.Entities
 {
-    public class Article
+    public class Articles
     {
         public int Id { get; set; }
         public string Title { get; set; }

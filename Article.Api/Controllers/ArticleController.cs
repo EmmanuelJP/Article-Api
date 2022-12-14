@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
+using Article.Service;
+using Article.Model.Entities;
 
 namespace Article.Api.Controllers
 {
@@ -9,38 +11,38 @@ namespace Article.Api.Controllers
         [ApiController]
         public class ArticleController : ControllerBase
         {
-            private readonly IService<Student> students;
+            private readonly IBaseService<Articles> _article;
 
-            public StudentsController(IService<Student> service)
+            public ArticleController(IBaseService<Articles> service)
             {
-                students = service;
+                _article = service;
             }
             [HttpGet]
-            public IEnumerable<Student> GetAll()
+            public IEnumerable<Articles> GetAll()
             {
-                return students.GetAll();
+                return _article.GetAll();
             }
             [HttpGet("{id}")]
-            public Student GetById([FromRoute] Guid id)
+            public Articles GetById([FromRoute] int id)
             {
-                return students.GetById(id);
+                return _article.GetById(id);
             }
             [HttpPost]
-            public IActionResult Add([FromBody] Student value)
+            public IActionResult Add([FromBody] Articles value)
             {
-                students.Add(value);
+                _article.Add(value);
                 return Ok();
             }
             [HttpPut]
-            public IActionResult Update([FromBody] Student value)
+            public IActionResult Update([FromBody] Articles value)
             {
-                students.Update(value);
+                _article.Update(value);
                 return NoContent();
             }
             [HttpDelete("{id}")]
-            public IActionResult Remove([FromRoute] Guid id)
+            public IActionResult Remove([FromRoute] int id)
             {
-                students.Remove(id);
+                _article.Delete(id);
                 return Ok();
             }
         }

@@ -1,4 +1,5 @@
 ﻿using Article.Core;
+using Article.Model.Entities;
 using Article.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -6,14 +7,14 @@ using System.Linq;
 
 namespace Article.Service
 {
-    public class ArticleService : IBaseService<Model.Entities.Article>
+    public class ArticleServices : IBaseService<Articles>
     {
         protected readonly ArticleRepository _articleRepository;
-        public ArticleService(ArticleRepository articleRepository)
+        public ArticleServices(ArticleRepository articleRepository)
         {
             _articleRepository = articleRepository;
         }
-        public OperationResult Add(Model.Entities.Article entity)
+        public OperationResult Add(Articles entity)
         {
             if (_articleRepository.GetAll().Where(x => x.Id == entity.Id).Any())
             {
@@ -33,15 +34,15 @@ namespace Article.Service
             Update(item);
             return new OperationResult(true, "Articulo Eliminado");
         }
-        public Model.Entities.Article GetById(int id)
+        public Articles GetById(int id)
         {
             return GetAll().Where(x => x.Id == id).FirstOrDefault();
         }
-        public IEnumerable<Model.Entities.Article> GetAll()
+        public IEnumerable<Articles> GetAll()
         { 
             return _articleRepository.GetAll().Where(x => x.IsDeleted == false);
         }
-        public OperationResult Update(Model.Entities.Article entity)
+        public OperationResult Update(Articles entity)
         {
             if (_articleRepository.GetAll().Where(x => x.Id == entity.Id && entity.IsDeleted == false).Any())
             {

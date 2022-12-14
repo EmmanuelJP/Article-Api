@@ -9,12 +9,12 @@ namespace Article.Model.ArticleDbContext
 {
     public class ArticleDbContext : DbContext
     {
-        public DbSet<Entities.Article> Article { get; set; }
+        public DbSet<Articles> Article { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=ToDoTask;Uid=root;Pwd=Code4321,;");
+            optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=Tienda;Uid=root;Pwd=Code4321,;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
