@@ -15,7 +15,7 @@ namespace Article.Service
         }
         public OperationResult Add(Model.Entities.Article entity)
         {
-            if (_articleRepository._dbSet.Where(x => x.Id == entity.Id).Any())
+            if (_articleRepository.GetAll().Where(x => x.Id == entity.Id).Any())
             {
                 return new OperationResult(false, "El Articulo existe");
             }
@@ -24,7 +24,7 @@ namespace Article.Service
         }
         public OperationResult Delete(int id)
         {
-            if (_articleRepository._dbSet.Where(x => x.Id == id).Any())
+            if (_articleRepository.GetAll().Where(x => x.Id == id).Any())
             {
                 return new OperationResult(false, "No se pudo eliminar el articulo");
             }
@@ -39,11 +39,11 @@ namespace Article.Service
         }
         public IEnumerable<Model.Entities.Article> GetAll()
         { 
-            return _articleRepository._dbSet.Where(x => x.IsDeleted == false);
+            return _articleRepository.GetAll().Where(x => x.IsDeleted == false);
         }
         public OperationResult Update(Model.Entities.Article entity)
         {
-            if (_articleRepository._dbSet.Where(x => x.Id == entity.Id && entity.IsDeleted == false).Any())
+            if (_articleRepository.GetAll().Where(x => x.Id == entity.Id && entity.IsDeleted == false).Any())
             {
                 _articleRepository.Update(entity);
                 return new OperationResult(true, "Articulo actulizado");
