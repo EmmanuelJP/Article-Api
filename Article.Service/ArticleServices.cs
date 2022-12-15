@@ -30,9 +30,7 @@ namespace Article.Service
             {
                 return new OperationResult(false, "No se pudo eliminar el articulo");
             }
-            var item = GetById(id);
-            item.IsDeleted = true;
-            Update(item);
+            _articleRepository.Delete(id);
             return new OperationResult(true, "Articulo Eliminado");
         }
         public Model.Entities.Article GetById(int id)
