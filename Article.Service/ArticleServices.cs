@@ -7,14 +7,14 @@ using System.Linq;
 
 namespace Article.Service
 {
-    public class ArticleServices : IBaseService<Articles>
+    public class ArticleServices : IBaseService<Model.Entities.Article>
     {
         protected readonly ArticleRepository _articleRepository;
         public ArticleServices(ArticleRepository articleRepository)
         {
             _articleRepository = articleRepository;
         }
-        public OperationResult Add(Articles entity)
+        public OperationResult Add(Model.Entities.Article entity)
         {
             if (_articleRepository.GetAll().Where(x => x.Id == entity.Id).Any())
             {
@@ -25,7 +25,8 @@ namespace Article.Service
         }
         public OperationResult Delete(int id)
         {
-            if (_articleRepository.GetAll().Where(x => x.Id == id).Any())
+            var isItDeleted = _articleRepository.GetAll().Where(x => x.Id == id).Any();
+            if (!isItDeleted)
             {
                 return new OperationResult(false, "No se pudo eliminar el articulo");
             }
@@ -34,15 +35,15 @@ namespace Article.Service
             Update(item);
             return new OperationResult(true, "Articulo Eliminado");
         }
-        public Articles GetById(int id)
+        public Model.Entities.Article GetById(int id)
         {
             return GetAll().Where(x => x.Id == id).FirstOrDefault();
         }
-        public IEnumerable<Articles> GetAll()
+        public IEnumerable<Model.Entities.Article> GetAll()
         { 
-            return _articleRepository.GetAll().Where(x => x.IsDeleted == false);
+            return _articleRepository.GetAll();
         }
-        public OperationResult Update(Articles entity)
+        public OperationResult Update(Model.Entities.Article entity)
         {
             if (_articleRepository.GetAll().Where(x => x.Id == entity.Id && entity.IsDeleted == false).Any())
             {
