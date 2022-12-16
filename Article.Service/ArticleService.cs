@@ -7,10 +7,10 @@ using System.Linq;
 
 namespace Article.Service
 {
-    public class ArticleServices : IBaseService<Model.Entities.Article>
+    public class ArticleService : IBaseService<Model.Entities.Article>
     {
         protected readonly ArticleRepository _articleRepository;
-        public ArticleServices(ArticleRepository articleRepository)
+        public ArticleService(ArticleRepository articleRepository)
         {
             _articleRepository = articleRepository;
         }

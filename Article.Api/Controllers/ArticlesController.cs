@@ -8,7 +8,7 @@ namespace Article.Api.Controllers
 {
    
         [Route("api/[controller]")]
-        [ApiController]//ok
+        [ApiController]
         public class ArticlesController : ControllerBase
         {
             private readonly IBaseService<Model.Entities.Article> _articleService;
