@@ -1,4 +1,5 @@
 ﻿using Article.Core;
+using Article.Model.Entities;
 using Article.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -24,13 +25,12 @@ namespace Article.Service
         }
         public OperationResult Delete(int id)
         {
-            if (_articleRepository.GetAll().Where(x => x.Id == id).Any())
+            var isItDeleted = _articleRepository.GetAll().Where(x => x.Id == id).Any();
+            if (!isItDeleted)
             {
                 return new OperationResult(false, "No se pudo eliminar el articulo");
             }
-            var item = GetById(id);
-            item.IsDeleted = true;
-            Update(item);
+            _articleRepository.Delete(id);
             return new OperationResult(true, "Articulo Eliminado");
         }
         public Model.Entities.Article GetById(int id)
@@ -39,7 +39,7 @@ namespace Article.Service
         }
         public IEnumerable<Model.Entities.Article> GetAll()
         { 
-            return _articleRepository.GetAll().Where(x => x.IsDeleted == false);
+            return _articleRepository.GetAll();
         }
         public OperationResult Update(Model.Entities.Article entity)
         {

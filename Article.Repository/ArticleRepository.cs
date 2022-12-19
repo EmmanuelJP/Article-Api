@@ -42,7 +42,7 @@ namespace Article.Repository
         }
         public Model.Entities.Article Get(int id)
         {
-            return _dbSet.Where(x => x.Id == id).FirstOrDefault();
+            return _dbSet.Where(x => x.Id == id && x.IsDeleted == false).FirstOrDefault();
         }
         public IQueryable<Model.Entities.Article> GetAll()
         {
