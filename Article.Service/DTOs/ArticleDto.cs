@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Article.Model.DTOs
+namespace Article.Service.DTOs
 {
     public class ArticleDto
     {

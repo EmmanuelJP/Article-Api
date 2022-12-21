@@ -1,30 +1,30 @@
 ﻿using Article.Model.ArticleDbContext;
-using Article.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ArticleEntity = Article.Model.Entities.Article;
 namespace Article.Repository
 {
     public interface IArticleRepository
     {
-        Model.Entities.Article Get(int id);
-        IQueryable<Model.Entities.Article> GetAll();
-        void Add(Model.Entities.Article entity);
-        void Update(Model.Entities.Article entity);
+        ArticleEntity Get(int id);
+        IQueryable<ArticleEntity> GetAll();
+        void Add(ArticleEntity entity);
+        void Update(ArticleEntity entity);
         void Delete(int id);
         bool Commit();
     }
     public class ArticleRepository : IArticleRepository
     {
         private readonly DbContext _dbContext;
-        private readonly DbSet<Model.Entities.Article> _dbSet;
+        private readonly DbSet<ArticleEntity> _dbSet;
         public ArticleRepository(ArticleDbContext dbContext)
         {
             _dbContext = dbContext;
-            _dbSet = dbContext.Set<Article>();
+            _dbSet = dbContext.Set<ArticleEntity>();
         }
-        public void Add(Model.Entities.Article entity)
+        public void Add(ArticleEntity entity)
         {
             _dbSet.Add(entity);
             Commit();
@@ -40,15 +40,15 @@ namespace Article.Repository
             item.IsDeleted = true;
             Update(item);
         }
-        public Model.Entities.Article Get(int id)
+        public ArticleEntity Get(int id)
         {
             return _dbSet.Where(x => x.Id == id).FirstOrDefault();
         }
-        public IQueryable<Model.Entities.Article> GetAll()
+        public IQueryable<ArticleEntity> GetAll()
         {
             return _dbSet.Where(x => x.IsDeleted == false);
         }
-        public void Update(Model.Entities.Article entity)
+        public void Update(ArticleEntity entity)
         {
             _dbSet.Attach(entity);
             _dbContext.Entry(entity).State = EntityState.Modified;
