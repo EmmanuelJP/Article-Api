@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace Article.Service
 {
-    public interface IBaseService<T> 
+    public interface IBaseService<EntityDto> 
     {
-        public T GetById(int id);
-        public OperationResult Add(T entity);
-        public OperationResult Update(T entity);
-        public IEnumerable<T> GetAll();
+        public EntityDto GetById(int id);
+        public OperationResult Add(EntityDto entity);
+        public OperationResult Update(EntityDto entity);
+        public IEnumerable<EntityDto> GetAll();
         public OperationResult Delete(int id);
     }
 }

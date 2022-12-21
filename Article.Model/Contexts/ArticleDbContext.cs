@@ -9,7 +9,7 @@ namespace Article.Model.ArticleDbContext
 {
     public class ArticleDbContext : DbContext
     {
-        public DbSet<Articles> Article { get; set; }
+        public DbSet<Entities.Article> Article { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

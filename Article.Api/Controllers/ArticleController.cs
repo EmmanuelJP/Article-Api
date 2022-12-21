@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using Article.Service;
 using Article.Model.Entities;
+using Article.Model.DTOs;
 
 namespace Article.Api.Controllers
 {
@@ -11,31 +12,34 @@ namespace Article.Api.Controllers
         [ApiController]
         public class ArticleController : ControllerBase
         {
-            private readonly IBaseService<Articles> _article;
+            private readonly IBaseService<ArticleDto> _article;
 
-            public ArticleController(IBaseService<Articles> service)
+            public ArticleController(IBaseService<ArticleDto> service)
             {
                 _article = service;
             }
             [HttpGet]
-            public IEnumerable<Articles> GetAll()
+            public IEnumerable<ArticleDto> GetAll()
             {
                 return _article.GetAll();
             }
             [HttpGet("{id}")]
-            public Articles GetById([FromRoute] int id)
+            public ArticleDto GetById([FromRoute] int id)
             {
                 return _article.GetById(id);
             }
             [HttpPost]
-            public IActionResult Add([FromBody] Articles value)
+            public IActionResult Add([FromBody] ArticleDto value)
             {
                 _article.Add(value);
                 return Ok();
             }
-            [HttpPut]
-            public IActionResult Update([FromBody] Articles value)
+            [HttpPut("{id}")]
+            public IActionResult Update([FromRoute]int id ,[FromBody] ArticleDto value)
             {
+                if (id!= value.Id)
+                return BadRequest();
+             
                 _article.Update(value);
                 return NoContent();
             }

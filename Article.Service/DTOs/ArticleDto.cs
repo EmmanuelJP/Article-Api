@@ -4,12 +4,13 @@ using System.Text;
 
 namespace Article.Model.DTOs
 {
-    public class AriclesDto
+    public class ArticleDto
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public bool IsDeleted { get; set; }
-        public AriclesDto()
+        public ArticleDto()
         {
 
         }

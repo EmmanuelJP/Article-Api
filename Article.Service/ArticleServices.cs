@@ -1,26 +1,27 @@
 ﻿using Article.Core;
+using Article.Model.DTOs;
 using Article.Model.Entities;
 using Article.Repository;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Article.Service
 {
-    public class ArticleServices : IBaseService<Articles>
+    public class ArticleServices : IBaseService<ArticleDto>
     {
         protected readonly ArticleRepository _articleRepository;
         public ArticleServices(ArticleRepository articleRepository)
         {
             _articleRepository = articleRepository;
         }
-        public OperationResult Add(Articles entity)
+        public OperationResult Add(ArticleDto entity)
         {
             if (_articleRepository.GetAll().Where(x => x.Id == entity.Id).Any())
             {
                 return new OperationResult(false, "El Articulo existe");
             }
-            _articleRepository.Add(entity);
+            Model.Entities.Article article = new Model.Entities.Article { Title = entity.Title, Description = entity.Description };
+            _articleRepository.Add(article);
             return new OperationResult(true, "El Articulo ha sido agregado");
         }
         public OperationResult Delete(int id)
@@ -34,22 +35,34 @@ namespace Article.Service
             Update(item);
             return new OperationResult(true, "Articulo Eliminado");
         }
-        public Articles GetById(int id)
+        public ArticleDto GetById(int id)
         {
-            return GetAll().Where(x => x.Id == id).FirstOrDefault();
+            var article = GetAll().Where(x => x.Id == id).FirstOrDefault();
+            return new ArticleDto { Id = article.Id, Title = article.Title, Description = article.Description };
         }
-        public IEnumerable<Articles> GetAll()
-        { 
-            return _articleRepository.GetAll().Where(x => x.IsDeleted == false);
-        }
-        public OperationResult Update(Articles entity)
+        public IEnumerable<ArticleDto> GetAll()
         {
-            if (_articleRepository.GetAll().Where(x => x.Id == entity.Id && entity.IsDeleted == false).Any())
+            var allArticles = _articleRepository.GetAll().Where(x => x.IsDeleted == false);
+            var allArticlesDtos = allArticles.Select(x => new ArticleDto()
             {
-                _articleRepository.Update(entity);
+                Description =
+                x.Description,
+                Title = x.Title,
+                Id = x.Id,
+                IsDeleted = x.IsDeleted
+            })
+                .ToList();
+            return allArticlesDtos;
+        }
+        public OperationResult Update(ArticleDto entity)
+        {
+            if (_articleRepository.GetAll().Where(x => x.Id == entity.Id).Any())
+            {
+                Model.Entities.Article articles = new Model.Entities.Article { Id = entity.Id, Title = entity.Title, Description = entity.Description, IsDeleted = entity.IsDeleted };
+                _articleRepository.Update(articles);
                 return new OperationResult(true, "Articulo actulizado");
             }
-            
+
             return new OperationResult(true, "Articulo no pudo ser actulizado");
         }
     }
