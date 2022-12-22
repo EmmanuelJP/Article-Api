@@ -25,7 +25,7 @@ namespace Article.Api
             services.AddControllers();
             services.AddScoped<ArticleDbContext>();
             services.AddScoped<ArticleRepository>();
-            services.AddScoped<IBaseService<ArticleDto>,ArticleServices>();
+            services.AddScoped<IBaseService<ArticleDto>,ArticleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

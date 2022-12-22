@@ -8,10 +8,10 @@ using ArticleEntity = Article.Model.Entities.Article;
 
 namespace Article.Service
 {
-    public class ArticleServices : IBaseService<ArticleDto>
+    public class ArticleService : IBaseService<ArticleDto>
     {
         protected readonly ArticleRepository _articleRepository;
-        public ArticleServices(ArticleRepository articleRepository)
+        public ArticleService(ArticleRepository articleRepository)
         {
             _articleRepository = articleRepository;
         }
@@ -35,9 +35,8 @@ namespace Article.Service
             {
                 return new OperationResult(false, "No se pudo eliminar el articulo");
             }
-            var item = GetById(id);
-            item.IsDeleted = true;
-            Update(item);
+            var updatedDto = GetById(id);
+            Update(updatedDto);
             return new OperationResult(true, "Articulo Eliminado");
         }
         public ArticleDto GetById(int id)
@@ -58,7 +57,6 @@ namespace Article.Service
                 Id = x.Id,
                 Description = x.Description,
                 Title = x.Title,
-                IsDeleted = x.IsDeleted
             }).ToList();
             return allArticlesDtos;
         }
@@ -73,7 +71,6 @@ namespace Article.Service
                 Id = entity.Id,
                 Title = entity.Title,
                 Description = entity.Description,
-                IsDeleted = entity.IsDeleted
             };
             _articleRepository.Update(articles);
             return new OperationResult(true, "Articulo actulizado");
