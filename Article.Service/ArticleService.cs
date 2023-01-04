@@ -1,4 +1,5 @@
 ﻿using Article.Core;
+using Article.Model.Entities;
 using Article.Repository;
 using Article.Service.DTOs;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace Article.Service
         {
             var allArticles = _articleRepository.GetAll();
             var allArticlesDtos = allArticles.Select(x => new ArticleDto()
-            {
+        { 
                 Id = x.Id,
                 Description = x.Description,
                 Title = x.Title,
@@ -63,7 +64,7 @@ namespace Article.Service
         public OperationResult Update(ArticleDto entity)
         {
             if (!_articleRepository.GetAll().Where(x => x.Id == entity.Id).Any())
-            {
+        {
                 return new OperationResult(false, "Articulo no pudo ser actulizado");
             }
             ArticleEntity articles = new ArticleEntity
@@ -73,8 +74,10 @@ namespace Article.Service
                 Description = entity.Description,
             };
             _articleRepository.Update(articles);
-            return new OperationResult(true, "Articulo actulizado");
-
+                return new OperationResult(true, "Articulo actulizado");
+            }
+            
+            return new OperationResult(true, "Articulo no pudo ser actulizado");
         }
     }
 }
