@@ -27,9 +27,8 @@ namespace Article.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ArticleDbContext>(options => 
-            options.UseMySql(Configuration.GetConnectionString("Connection")));
+                options.UseMySql(Configuration.GetConnectionString("Connection")));
             services.AddControllers();
-            services.AddScoped<ArticleDbContext>();
             services.AddScoped<ArticleRepository>();
             services.AddScoped<IBaseService<ArticleDto>,ArticleService>();
             
