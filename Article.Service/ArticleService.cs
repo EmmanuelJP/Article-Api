@@ -47,7 +47,7 @@ namespace Article.Service
         public IEnumerable<ArticleDto> GetAll()
         {
             var allArticles = _articleRepository.GetAll();
-            var maplist = _mapper.Map<IEnumerable<Model.Entities.Article>, IEnumerable<ArticleDto>>(allArticles);
+            var maplist = _mapper.Map<IEnumerable<ArticleDto>>(allArticles);
             return maplist;
         }
         public IOperationResult Update(ArticleDto entity)
