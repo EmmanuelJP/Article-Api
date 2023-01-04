@@ -5,8 +5,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Article.Model.ArticleDbContext;
+using Article.Model.Contexts;
 using Article.Repository;
+using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Article.Api
 {
@@ -17,15 +20,19 @@ namespace Article.Api
             Configuration = configuration;
         }
 
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ArticleDbContext>(options => 
+            options.UseMySql(Configuration.GetConnectionString("Connection")));
             services.AddControllers();
             services.AddScoped<ArticleDbContext>();
             services.AddScoped<ArticleRepository>();
             services.AddScoped<IBaseService<ArticleDto>,ArticleService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
