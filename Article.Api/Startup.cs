@@ -10,6 +10,9 @@ using Article.Repository;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Article.Service.FluentValidations;
+using System;
+using FluentValidation;
 
 namespace Article.Api
 {
@@ -32,7 +35,8 @@ namespace Article.Api
             services.AddScoped<ArticleDbContext>();
             services.AddScoped<ArticleRepository>();
             services.AddScoped<IBaseService<ArticleDto>,ArticleService>();
-            
+            services.AddScoped<IValidator<ArticleDto>, ArticleValidator>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
