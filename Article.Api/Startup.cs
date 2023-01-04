@@ -1,17 +1,12 @@
-using Article.Model.Entities;
+using Article.Service.DTOs;
 using Article.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Article.Model.ArticleDbContext;
+using Article.Repository;
 
 namespace Article.Api
 {
@@ -28,7 +23,9 @@ namespace Article.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<IBaseService<Model.Entities.Article>, Service.ArticleService>();
+            services.AddScoped<ArticleDbContext>();
+            services.AddScoped<ArticleRepository>();
+            services.AddScoped<IBaseService<ArticleDto>,ArticleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

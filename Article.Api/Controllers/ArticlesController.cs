@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Article.Service;
+using Article.Service.DTOs;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
 using Article.Service;
@@ -11,38 +13,41 @@ namespace Article.Api.Controllers
         [ApiController]
         public class ArticlesController : ControllerBase
         {
-            private readonly IBaseService<Model.Entities.Article> _articleService;
+        private readonly IBaseService<ArticleDto> _articleServices;
 
-            public ArticlesController(IBaseService<Model.Entities.Article> service)
+        public ArticlesController(IBaseService<ArticleDto> service)
             {
-                _articleService = service;
+            _articleServices = service;
             }
             [HttpGet]
-            public IEnumerable<Model.Entities.Article> GetAll()
+        public IEnumerable<ArticleDto> GetAll()
             {
-                return _articleService.GetAll();
+            return _articleServices.GetAll();
             }
             [HttpGet("{id}")]
-            public Model.Entities.Article GetById([FromRoute] int id)
+        public ArticleDto GetById([FromRoute] int id)
             {
-                return _articleService.GetById(id);
+            return _articleServices.GetById(id);
             }
             [HttpPost]
-            public IActionResult Add([FromBody] Model.Entities.Article value)
+        public IActionResult Add([FromBody] ArticleDto value)
             {
-                _articleService.Add(value);
+            _articleServices.Add(value);
                 return Ok();
             }
             [HttpPut("{id}")]
-            public IActionResult Update([FromRoute]int id ,[FromBody] Model.Entities.Article value)
+        public IActionResult Update([FromRoute] int id, [FromBody] ArticleDto value)
             {
-                _articleService.Update(value);
+            if (id != value.Id)
+                return BadRequest();
+
+            _articleServices.Update(value);
                 return NoContent();
             }
             [HttpDelete("{id}")]
             public IActionResult Remove([FromRoute] int id)
             {
-                _articleService.Delete(id);
+            _articleServices.Delete(id);
                 return Ok();
             }
         }
