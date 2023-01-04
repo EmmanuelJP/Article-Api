@@ -1,6 +1,7 @@
 ﻿using Article.Core;
 using Article.Repository;
 using Article.Service.DTOs;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using ArticleEntity = Article.Model.Entities.Article;
@@ -11,25 +12,23 @@ namespace Article.Service
     public class ArticleService : IBaseService<ArticleDto>
     {
         protected readonly ArticleRepository _articleRepository;
-        public ArticleService(ArticleRepository articleRepository)
+        protected readonly IMapper _mapper;
+        public ArticleService(ArticleRepository articleRepository, IMapper mapper)
         {
             _articleRepository = articleRepository;
+            _mapper = mapper;
         }
-        public OperationResult Add(ArticleDto entity)
+        public IOperationResult Add(ArticleDto entity)
         {
             if (_articleRepository.GetAll().Where(x => x.Id == entity.Id).Any())
             {
                 return new OperationResult(false, "El Articulo existe");
             }
-            ArticleEntity article = new ArticleEntity
-            {
-                Title = entity.Title,
-                Description = entity.Description
-            };
+           var article = _mapper.Map<Model.Entities.Article>(entity);
             _articleRepository.Add(article);
             return new OperationResult(true, "El Articulo ha sido agregado");
         }
-        public OperationResult Delete(int id)
+        public IOperationResult Delete(int id)
         {
             if (!_articleRepository.GetAll().Where(x => x.Id == id).Any())
             {
@@ -40,40 +39,27 @@ namespace Article.Service
         }
         public ArticleDto GetById(int id)
         {
-            var article = _articleRepository.Get(id);
-            return new ArticleDto
-            {
-                Id = article.Id,
-                Title = article.Title,
-                Description = article.Description
-            };
+            var article = GetAll().Where(x => x.Id == id).FirstOrDefault();
+            return _mapper.Map<ArticleDto>(article);
         }
         public IEnumerable<ArticleDto> GetAll()
         {
             var allArticles = _articleRepository.GetAll();
-            var allArticlesDtos = allArticles.Select(x => new ArticleDto()
-            {
-                Id = x.Id,
-                Description = x.Description,
-                Title = x.Title,
-            }).ToList();
-            return allArticlesDtos;
+            var maplist = _mapper.Map<IEnumerable<ArticleDto>>(allArticles);
+            return maplist;
         }
-        public OperationResult Update(ArticleDto entity)
+        public IOperationResult Update(ArticleDto entity)
         {
+            var _article = _articleRepository.Get(entity.Id);
+            var articles = _mapper.Map(entity, _article);
             if (!_articleRepository.GetAll().Where(x => x.Id == entity.Id).Any())
             {
                 return new OperationResult(false, "Articulo no pudo ser actulizado");
             }
-            ArticleEntity articles = new ArticleEntity
-            {
-                Id = entity.Id,
-                Title = entity.Title,
-                Description = entity.Description,
-            };
+            
             _articleRepository.Update(articles);
-            return new OperationResult(true, "Articulo actulizado");
-
+                return new OperationResult(true, "Articulo actulizado");
+            }
         }
     }
-}
+    
