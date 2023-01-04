@@ -52,11 +52,13 @@ namespace Article.Service
         }
         public IOperationResult Update(ArticleDto entity)
         {
+            var _article = _articleRepository.Get(entity.Id);
+            var articles = _mapper.Map(entity, _article);
             if (!_articleRepository.GetAll().Where(x => x.Id == entity.Id).Any())
-        {
+            {
                 return new OperationResult(false, "Articulo no pudo ser actulizado");
             }
-            var articles = _mapper.Map<Model.Entities.Article>(entity);
+            
             _articleRepository.Update(articles);
                 return new OperationResult(true, "Articulo actulizado");
             }
