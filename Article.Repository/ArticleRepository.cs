@@ -1,4 +1,4 @@
-﻿using Article.Model.ArticleDbContext;
+﻿using Article.Model.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
