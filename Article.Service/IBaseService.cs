@@ -7,9 +7,9 @@ namespace Article.Service
     public interface IBaseService<EntityDto> 
     {
         public EntityDto GetById(int id);
-        public OperationResult Add(EntityDto entity);
-        public OperationResult Update(EntityDto entity);
+        public IOperationResult Add(EntityDto entity);
+        public IOperationResult Update(EntityDto entity);
         public IEnumerable<EntityDto> GetAll();
-        public OperationResult Delete(int id);
+        public IOperationResult Delete(int id);
     }
 }
