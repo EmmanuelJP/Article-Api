@@ -75,9 +75,6 @@ namespace Article.Service
             };
             _articleRepository.Update(articles);
                 return new OperationResult(true, "Articulo actulizado");
-            }
-            
-            return new OperationResult(true, "Articulo no pudo ser actulizado");
         }
     }
 }
