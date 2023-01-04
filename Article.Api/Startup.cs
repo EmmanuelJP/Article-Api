@@ -10,6 +10,9 @@ using Article.Repository;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Article.Service.FluentValidations;
+using System;
+using FluentValidation;
 
 namespace Article.Api
 {
