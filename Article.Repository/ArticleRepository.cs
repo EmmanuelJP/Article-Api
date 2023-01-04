@@ -1,7 +1,5 @@
 ﻿using Article.Model.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using ArticleEntity = Article.Model.Entities.Article;
 namespace Article.Repository

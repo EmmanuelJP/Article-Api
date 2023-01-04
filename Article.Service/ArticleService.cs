@@ -11,9 +11,9 @@ namespace Article.Service
 {
     public class ArticleService : IBaseService<ArticleDto>
     {
-        protected readonly ArticleRepository _articleRepository;
+        protected readonly IArticleRepository _articleRepository;
         protected readonly IMapper _mapper;
-        public ArticleService(ArticleRepository articleRepository, IMapper mapper)
+        public ArticleService(IArticleRepository articleRepository, IMapper mapper)
         {
             _articleRepository = articleRepository;
             _mapper = mapper;
