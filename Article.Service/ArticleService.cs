@@ -2,7 +2,10 @@
 using Article.Repository;
 using Article.Service.DTOs;
 using AutoMapper;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using ArticleEntity = Article.Model.Entities.Article;
 
@@ -13,13 +16,20 @@ namespace Article.Service
     {
         protected readonly IArticleRepository _articleRepository;
         protected readonly IMapper _mapper;
-        public ArticleService(IArticleRepository articleRepository, IMapper mapper)
+        protected readonly IValidator<ArticleDto> _validator;
+        public ArticleService(IArticleRepository articleRepository, IMapper mapper, IValidator<ArticleDto> validator)
         {
             _articleRepository = articleRepository;
             _mapper = mapper;
+            _validator = validator;
         }
         public IOperationResult Add(ArticleDto entity)
         {
+            var results = _validator.Validate(entity);
+            if (!results.IsValid)
+            {
+                return new OperationResult(true, "Data invalid");
+            }
             if (_articleRepository.GetAll().Where(x => x.Id == entity.Id).Any())
             {
                 return new OperationResult(false, "El Articulo existe");
@@ -50,6 +60,11 @@ namespace Article.Service
         }
         public IOperationResult Update(ArticleDto dto)
         {
+            var results = _validator.Validate(dto);
+            if (!results.IsValid)
+            {
+              return new OperationResult(true,"Data invalid"); 
+            }
             if (!_articleRepository.GetAll().Where(x => x.Id == dto.Id).Any())
                 return new OperationResult(false, "Articulo no pudo ser actulizado");
 

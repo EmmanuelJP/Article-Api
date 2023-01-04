@@ -2,6 +2,8 @@ using Article.Model.Contexts;
 using Article.Repository;
 using Article.Service;
 using Article.Service.DTOs;
+using Article.Service.FluentValidations;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +31,7 @@ namespace Article.Api
             services.AddControllers();
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IBaseService<ArticleDto>, ArticleService>();
+            services.AddScoped<IValidator<ArticleDto>, ArticleValidator>();
 
         }
 
