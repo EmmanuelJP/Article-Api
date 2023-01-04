@@ -1,5 +1,4 @@
 ﻿using Article.Core;
-using Article.Model.Entities;
 using Article.Repository;
 using Article.Service.DTOs;
 using AutoMapper;
@@ -35,8 +34,7 @@ namespace Article.Service
             {
                 return new OperationResult(false, "No se pudo eliminar el articulo");
             }
-            var updatedDto = GetById(id);
-            Update(updatedDto);
+            _articleRepository.Delete(id);
             return new OperationResult(true, "Articulo Eliminado");
         }
         public ArticleDto GetById(int id)
@@ -64,3 +62,4 @@ namespace Article.Service
             }
         }
     }
+    

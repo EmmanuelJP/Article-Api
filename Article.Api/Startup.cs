@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Article.Model.ArticleDbContext;
+using Article.Model.Contexts;
 using Article.Repository;
 using AutoMapper;
 using Article.Service.Map;
+using Microsoft.EntityFrameworkCore;
 
 namespace Article.Api
 {
@@ -19,11 +20,14 @@ namespace Article.Api
             Configuration = configuration;
         }
 
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ArticleDbContext>(options => 
+            options.UseMySql(Configuration.GetConnectionString("Connection")));
             services.AddControllers();
             services.AddScoped<ArticleDbContext>();
             services.AddScoped<ArticleRepository>();
