@@ -1,5 +1,4 @@
 ﻿using Article.Core;
-using Article.Model.Entities;
 using Article.Repository;
 using Article.Service.DTOs;
 using System.Collections.Generic;
@@ -36,13 +35,12 @@ namespace Article.Service
             {
                 return new OperationResult(false, "No se pudo eliminar el articulo");
             }
-            var updatedDto = GetById(id);
-            Update(updatedDto);
+            _articleRepository.Delete(id);
             return new OperationResult(true, "Articulo Eliminado");
         }
         public ArticleDto GetById(int id)
         {
-            var article = GetAll().Where(x => x.Id == id).FirstOrDefault();
+            var article = _articleRepository.Get(id);
             return new ArticleDto
             {
                 Id = article.Id,
@@ -54,7 +52,7 @@ namespace Article.Service
         {
             var allArticles = _articleRepository.GetAll();
             var allArticlesDtos = allArticles.Select(x => new ArticleDto()
-        { 
+            {
                 Id = x.Id,
                 Description = x.Description,
                 Title = x.Title,
@@ -64,7 +62,7 @@ namespace Article.Service
         public OperationResult Update(ArticleDto entity)
         {
             if (!_articleRepository.GetAll().Where(x => x.Id == entity.Id).Any())
-        {
+            {
                 return new OperationResult(false, "Articulo no pudo ser actulizado");
             }
             ArticleEntity articles = new ArticleEntity
@@ -74,10 +72,8 @@ namespace Article.Service
                 Description = entity.Description,
             };
             _articleRepository.Update(articles);
-                return new OperationResult(true, "Articulo actulizado");
-            }
-            
-            return new OperationResult(true, "Articulo no pudo ser actulizado");
+            return new OperationResult(true, "Articulo actulizado");
+
         }
     }
 }
