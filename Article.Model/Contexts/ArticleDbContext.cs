@@ -1,8 +1,14 @@
+<<<<<<< Updated upstream
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Article.Model.Entities;
+=======
+﻿using Article.Model.Entities;
+using Article.Model.Extentions;
+using Microsoft.EntityFrameworkCore;
+>>>>>>> Stashed changes
 
 
 namespace Article.Model.ArticleDbContext
@@ -19,6 +25,16 @@ namespace Article.Model.ArticleDbContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                if (typeof(IBaseEntity).IsAssignableFrom(entityType.ClrType))
+                {
+                    entityType.AddSoftDeleteQueryFilter();
+                }
+            }
         }
     }
    

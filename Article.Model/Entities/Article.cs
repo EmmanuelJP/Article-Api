@@ -2,7 +2,13 @@
 
 namespace Article.Model.Entities
 {
-    public class Article
+
+    public interface IBaseEntity
+    {
+        public bool IsDeleted { get; set; }
+
+    }
+    public class Article : IBaseEntity
     {
         public int Id { get; set; }
         public string Title { get; set; }
