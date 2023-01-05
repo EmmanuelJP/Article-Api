@@ -1,5 +1,6 @@
 <<<<<<< Updated upstream
 ﻿using Microsoft.EntityFrameworkCore;
+<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,22 +10,19 @@ using Article.Model.Entities;
 using Article.Model.Extentions;
 using Microsoft.EntityFrameworkCore;
 >>>>>>> Stashed changes
+=======
+>>>>>>> main
 
 
-namespace Article.Model.ArticleDbContext
+namespace Article.Model.Contexts
 {
     public class ArticleDbContext : DbContext
     {
         public DbSet<Entities.Article> Article { get; set; }
-
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=Tienda;Uid=root;Pwd=Code4321,;");
+        public ArticleDbContext(){
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public ArticleDbContext(DbContextOptions<ArticleDbContext> options) : base(options)
         {
-
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,6 +35,5 @@ namespace Article.Model.ArticleDbContext
             }
         }
     }
-   
 }
 

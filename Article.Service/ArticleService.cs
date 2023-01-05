@@ -1,55 +1,64 @@
 ﻿using Article.Core;
-using Article.Model.Entities;
 using Article.Repository;
-using Microsoft.EntityFrameworkCore;
+using Article.Service.DTOs;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
+using ArticleEntity = Article.Model.Entities.Article;
+
 
 namespace Article.Service
 {
-    public class ArticleService : IBaseService<Model.Entities.Article>
+    public class ArticleService : IBaseService<ArticleDto>
     {
-        protected readonly ArticleRepository _articleRepository;
-        public ArticleService(ArticleRepository articleRepository)
+        protected readonly IArticleRepository _articleRepository;
+        protected readonly IMapper _mapper;
+        public ArticleService(IArticleRepository articleRepository, IMapper mapper)
         {
             _articleRepository = articleRepository;
+            _mapper = mapper;
         }
-        public OperationResult Add(Model.Entities.Article entity)
+        public IOperationResult Add(ArticleDto entity)
         {
             if (_articleRepository.GetAll().Where(x => x.Id == entity.Id).Any())
             {
                 return new OperationResult(false, "El Articulo existe");
             }
-            _articleRepository.Add(entity);
+            var article = _mapper.Map<ArticleEntity>(entity);
+            _articleRepository.Add(article);
             return new OperationResult(true, "El Articulo ha sido agregado");
         }
-        public OperationResult Delete(int id)
+        public IOperationResult Delete(int id)
         {
-            var isItDeleted = _articleRepository.GetAll().Where(x => x.Id == id).Any();
-            if (!isItDeleted)
+            if (!_articleRepository.GetAll().Where(x => x.Id == id).Any())
             {
                 return new OperationResult(false, "No se pudo eliminar el articulo");
             }
             _articleRepository.Delete(id);
             return new OperationResult(true, "Articulo Eliminado");
         }
-        public Model.Entities.Article GetById(int id)
+        public ArticleDto GetById(int id)
         {
-            return GetAll().Where(x => x.Id == id).FirstOrDefault();
+            var article = _articleRepository.Get(id);
+            return _mapper.Map<ArticleDto>(article);
         }
-        public IEnumerable<Model.Entities.Article> GetAll()
-        { 
-            return _articleRepository.GetAll();
-        }
-        public OperationResult Update(Model.Entities.Article entity)
+        public IEnumerable<ArticleDto> GetAll()
         {
-            if (_articleRepository.GetAll().Where(x => x.Id == entity.Id && entity.IsDeleted == false).Any())
-            {
-                _articleRepository.Update(entity);
-                return new OperationResult(true, "Articulo actulizado");
-            }
-            
-            return new OperationResult(true, "Articulo no pudo ser actulizado");
+            var allArticles = _articleRepository.GetAll();
+            var maplist = _mapper.Map<IEnumerable<ArticleDto>>(allArticles);
+            return maplist;
+        }
+        public IOperationResult Update(ArticleDto dto)
+        {
+            if (!_articleRepository.GetAll().Where(x => x.Id == dto.Id).Any())
+                return new OperationResult(false, "Articulo no pudo ser actulizado");
+
+            var entity = _articleRepository.Get(dto.Id);
+            _mapper.Map(dto, entity);
+
+
+            _articleRepository.Update(entity);
+            return new OperationResult(true, "Articulo actulizado");
         }
     }
 }

@@ -1,18 +1,23 @@
-using Article.Model.Entities;
+using Article.Model.Contexts;
+using Article.Repository;
 using Article.Service;
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 using Article.Service.DTOs;
 using AutoMapper;
 >>>>>>> Stashed changes
+=======
+using Article.Service.DTOs;
+>>>>>>> main
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 using Microsoft.Extensions.Logging;
 using System;
@@ -24,6 +29,8 @@ using Microsoft.OpenApi.Models;
 using Article.Service.Map;
 
 >>>>>>> Stashed changes
+=======
+>>>>>>> main
 
 namespace Article.Api
 {
@@ -34,12 +41,16 @@ namespace Article.Api
             Configuration = configuration;
         }
 
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ArticleDbContext>(options =>
+                options.UseMySql(Configuration.GetConnectionString("Connection")));
             services.AddControllers();
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             services.AddSingleton<IBaseService<Model.Entities.Article>, Service.ArticleService>();
 =======
@@ -48,6 +59,12 @@ namespace Article.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ArticleCRUD", Version = "v1" });
+=======
+            services.AddScoped<IArticleRepository, ArticleRepository>();
+            services.AddScoped<IBaseService<ArticleDto>, ArticleService>();
+
+        }
+>>>>>>> main
 
             });
             services.AddHealthChecks()
