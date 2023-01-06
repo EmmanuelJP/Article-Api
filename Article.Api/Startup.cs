@@ -10,6 +10,8 @@ using AutoMapper;
 =======
 using Article.Service.DTOs;
 >>>>>>> main
+using Article.Service.FluentValidations;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -62,6 +64,7 @@ namespace Article.Api
 =======
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IBaseService<ArticleDto>, ArticleService>();
+            services.AddScoped<IValidator<ArticleDto>, ArticleValidator>();
 
         }
 >>>>>>> main
