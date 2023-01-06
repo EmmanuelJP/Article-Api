@@ -1,17 +1,11 @@
-<<<<<<< Updated upstream
+
 ﻿using Microsoft.EntityFrameworkCore;
-<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Article.Model.Entities;
-=======
-﻿using Article.Model.Entities;
 using Article.Model.Extentions;
-using Microsoft.EntityFrameworkCore;
->>>>>>> Stashed changes
-=======
->>>>>>> main
+
 
 
 namespace Article.Model.Contexts
