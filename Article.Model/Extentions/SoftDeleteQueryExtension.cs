@@ -11,20 +11,16 @@ namespace Article.Model.Extentions
     {
         public static void AddSoftDeleteQueryFilter(this IMutableEntityType entityData)
         {
-            var methodToCall = typeof(SoftDeleteQueryExtension)
-                .GetMethod(nameof(GetSoftDeleteFilter),BindingFlags.NonPublic | BindingFlags.Static)
-                .MakeGenericMethod(entityData.ClrType);
-
-
-            var filter = methodToCall.Invoke(null, new object[] { });
-
+            var filter = typeof(SoftDeleteQueryExtension)
+                .GetMethod(nameof(GetSoftDeleteFilter), BindingFlags.NonPublic | BindingFlags.Static)
+                .MakeGenericMethod(entityData.ClrType)
+                .Invoke(null, new object[] { });
 
             entityData.SetQueryFilter((LambdaExpression)filter);
-         
         }
 
         private static LambdaExpression GetSoftDeleteFilter<TEntity>()
-            where TEntity : class, IBaseEntity
+            where TEntity : class, ISoftDeleteEntity
         {
             Expression<Func<TEntity, bool>> filter = x => !x.IsDeleted;
             return filter;

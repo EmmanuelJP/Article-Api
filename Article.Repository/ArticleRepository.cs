@@ -6,6 +6,7 @@ namespace Article.Repository
 {
     public interface IArticleRepository
     {
+        bool Any(int id);
         ArticleEntity Get(int id);
         IQueryable<ArticleEntity> GetAll();
         void Add(ArticleEntity entity);
@@ -15,18 +16,24 @@ namespace Article.Repository
     }
     public class ArticleRepository : IArticleRepository
     {
-        private readonly DbContext _dbContext;
+        private readonly ArticleDbContext _dbContext;
         private readonly DbSet<ArticleEntity> _dbSet;
         public ArticleRepository(ArticleDbContext dbContext)
         {
             _dbContext = dbContext;
-            _dbSet = dbContext.Set<ArticleEntity>();
+            _dbSet = dbContext.Article;
         }
         public void Add(ArticleEntity entity)
         {
             _dbSet.Add(entity);
             Commit();
         }
+
+        public bool Any(int id)
+        {
+            return GetAll().Any(x => x.Id == id);
+        }
+
         public bool Commit()
         {
             var result = _dbContext.SaveChanges() == 1;
@@ -35,16 +42,16 @@ namespace Article.Repository
         public void Delete(int id)
         {
             var item = Get(id);
-            item.IsDeleted = true;
-            Update(item);
+            _dbContext.Remove(item);
+            Commit();
         }
         public ArticleEntity Get(int id)
         {
-            return _dbSet.Where(x => x.Id == id && x.IsDeleted == false).FirstOrDefault();
+            return _dbSet.Where(x => x.Id == id).FirstOrDefault();
         }
         public IQueryable<ArticleEntity> GetAll()
         {
-            return _dbSet.Where(x => x.IsDeleted == false);
+            return _dbSet.AsQueryable();
         }
         public void Update(ArticleEntity entity)
         {

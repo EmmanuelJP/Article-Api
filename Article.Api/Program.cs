@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace Article.Api
 {
     public class Program
@@ -15,10 +14,14 @@ namespace Article.Api
         public static void Main(string[] args)
         {
             IConfiguration configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("appsettings.json")
             .Build();
-            Log.Logger = new LoggerConfiguration().ReadFrom
-            .Configuration(configuration).CreateLogger();
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Warning()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+
             CreateHostBuilder(args).Build().Run();
         }
 
