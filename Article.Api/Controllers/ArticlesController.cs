@@ -1,6 +1,18 @@
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+﻿using Microsoft.AspNetCore.Mvc;
+=======
 ﻿using Article.Service;
 using Article.Service.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
+using Serilog;
+>>>>>>> Stashed changes
+=======
+﻿using Article.Service;
+using Article.Service.DTOs;
+using Microsoft.AspNetCore.Mvc;
+>>>>>>> main
 using System.Collections.Generic;
 
 namespace Article.Api.Controllers
@@ -16,10 +28,29 @@ namespace Article.Api.Controllers
         {
             _articleServices = service;
         }
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
+        [HttpGet]
+        public IEnumerable<ArticleDto> GetAll()
+        {
+            try
+            {
+               throw new System.Exception("Add-database");
+               // return _articleServices.GetAll();
+            }
+            catch (System.Exception ex)
+            {
+                Log.Logger.Error(ex.Message);
+                throw ex;
+            }
+            
+=======
         [HttpGet]
         public IEnumerable<ArticleDto> GetAll()
         {
             return _articleServices.GetAll();
+>>>>>>> main
         }
         [HttpGet("{id}")]
         public ArticleDto GetById([FromRoute] int id)
@@ -48,4 +79,8 @@ namespace Article.Api.Controllers
             return Ok();
         }
     }
+<<<<<<< HEAD
+>>>>>>> Stashed changes
+=======
+>>>>>>> main
 }
